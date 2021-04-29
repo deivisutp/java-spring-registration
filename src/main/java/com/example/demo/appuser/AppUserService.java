@@ -2,6 +2,7 @@ package com.example.demo.appuser;
 
 import com.example.demo.appuser.repositories.AppUserRepository;
 import com.example.demo.registration.token.ConfirmationToken;
+import com.example.demo.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND = "User with email %s not found";
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -50,6 +52,12 @@ public class AppUserService implements UserDetailsService {
                 appUser
         );
 
-        return "it works";
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        return token;
+    }
+
+    public int enableAppUser(String email) {
+        return appUserRepository.enableAppUser(email);
     }
 }
