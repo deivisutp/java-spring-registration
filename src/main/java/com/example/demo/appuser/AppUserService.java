@@ -11,6 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,6 +36,14 @@ public class AppUserService implements UserDetailsService {
                 .findByEmail(appUser.getEmail())
                 .isPresent();
 
+
+        List<Integer> array = Arrays.asList(1, 2, 3, 4, 5, 6);
+        /*
+        for (Integer integer: array) {
+            System.out.println(integer);
+        } */
+        array.stream().forEach(e -> System.out.println(e));
+        
         if (userExists) {
             throw new IllegalStateException("email already taken");
         }
