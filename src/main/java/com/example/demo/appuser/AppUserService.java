@@ -42,8 +42,11 @@ public class AppUserService implements UserDetailsService {
         for (Integer integer: array) {
             System.out.println(integer);
         } */
-        array.stream().forEach(e -> System.out.println(e));
-        
+        array.stream()
+                .filter(e -> e % 2 == 0)
+                .forEach(e -> System.out.println(e));
+
+
         if (userExists) {
             throw new IllegalStateException("email already taken");
         }
